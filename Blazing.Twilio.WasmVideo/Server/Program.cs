@@ -12,12 +12,14 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddSignalR(options => options.EnableDetailedErrors = true)
         .AddMessagePackProtocol();
-builder.Services.Configure<TwilioSettings>(settings =>
-{
-    settings.AccountSid = GetEnvironmentVariable("TWILIO_ACCOUNT_SID");
-    settings.ApiSecret = GetEnvironmentVariable("TWILIO_API_SECRET");
-    settings.ApiKey = GetEnvironmentVariable("TWILIO_API_KEY");
-});
+//builder.Services.Configure<TwilioSettings>(settings =>
+//{
+//    settings.AccountSid = GetEnvironmentVariable("TWILIO_ACCOUNT_SID");
+//    settings.ApiSecret = GetEnvironmentVariable("TWILIO_API_SECRET");
+//    settings.ApiKey = GetEnvironmentVariable("TWILIO_API_KEY");
+//});
+builder.Services.Configure<TwilioSettings>(builder.Configuration.GetSection("Twilio"));
+
 builder.Services.AddSingleton<TwilioService>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
